@@ -35,5 +35,4 @@ jobs:
           npm version "$TAG_VERSION" --no-git-tag-version --allow-same-version
 
       - run: npm run build
-
-      - run: npm publish --provenance --access public
+      - run: npm publish --access public
