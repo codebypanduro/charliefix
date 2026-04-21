@@ -5,6 +5,11 @@ export type FixItem = {
   targetSelector: string;
   targetText: string;
   createdAt: number;
+  url?: string;
+  route?: string;
+  component?: string;
+  componentChain?: string;
+  source?: string;
 };
 
 const KEY = 'charlie-fixes:queue';

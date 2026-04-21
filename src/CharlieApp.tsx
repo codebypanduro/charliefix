@@ -57,6 +57,11 @@ export function CharlieApp({ accent }: { accent: string }) {
       targetSelector: desc.selector,
       targetText: desc.text,
       createdAt: Date.now(),
+      url: desc.url,
+      route: desc.route,
+      component: desc.component,
+      componentChain: desc.componentChain,
+      source: desc.source,
     };
     setItems((prev) => [...prev, item]);
     setComposerEl(null);

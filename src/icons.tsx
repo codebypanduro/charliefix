@@ -61,4 +61,10 @@ export const Icon = {
       <line x1="10" y1="14" x2="21" y2="3" />
     </svg>
   ) as JSX.Element,
+  eye: (
+    <svg {...base}>
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+  ) as JSX.Element,
 };
