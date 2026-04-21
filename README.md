@@ -189,22 +189,42 @@ Useful if you want to toggle Charlie behind a keyboard shortcut or feature flag.
 
 ## How to use it
 
-1. Click **Select** (or press `S`)
-2. Hover elements — Charlie highlights what's under your cursor
+1. Click **Select** (or press `S`) — or **Screenshot** (or press `C`) to capture an image
+2. Hover elements — Charlie highlights what's under your cursor (or drag a region when cropping)
 3. Click the element you want to fix
 4. Type what should change, press `⏎` to save
 5. Repeat for every issue
 6. Click **Hand off** — the full markdown prompt is on your clipboard
-7. Paste into Claude, Cursor, Copilot, etc.
+7. Paste into Claude, Cursor, Copilot, etc. If you captured screenshots, copy each one from the paste panel and paste it into the chat too.
+
+### Screenshot capture
+
+Click the **Screenshot** button in the toolbar to open a popover with two options:
+
+- **Crop from area** — drag a rectangle anywhere on the page. The pixels under that region are captured with `html2canvas`.
+- **Full image** — captures the entire visible viewport.
+
+The composer that opens next lets you write the note just like for element picks, and shows a thumbnail of what you captured. Screenshots save alongside their note and survive reloads (image blobs live in IndexedDB, metadata in `localStorage`).
+
+### Handing off with screenshots
+
+Clicking **Hand off** copies the markdown prompt to your clipboard *and* opens a paste panel listing every screenshot in the queue. Because the browser clipboard only holds one image at a time — and paste targets only read one — the panel gives you two flows:
+
+- **Step through** (recommended for 2+ shots): click **Copy image 1 of N**, paste into Claude Code, click again for image 2, paste, repeat. A **Reset** button jumps back to image 1.
+- **Per-image Copy** buttons for random-access copy.
+- **Download** button next to each row writes a `charlie-fix-N.png` file to disk — useful if you'd rather drag the PNGs into the chat or let the agent read them via file paths referenced in the prompt (`![](./charlie-fix-N.png)`).
+
+Deleting an item from the fix list also removes its image from IndexedDB.
 
 ### Keyboard shortcuts
 
 | Key | Action |
 | --- | --- |
 | `S` | Start selecting an element |
+| `C` | Toggle the Screenshot popover |
 | `L` | Toggle the fix list |
 | `⏎` | Save the current comment |
-| `Esc` | Cancel selection / close composer / close list |
+| `Esc` | Cancel selection / close composer / close list / close popover |
 
 ### What the output looks like
 
@@ -222,9 +242,19 @@ The following fixes were collected from a live page using Charlie fixes...
 **Fix:** Make this the brand coral, not blue.
 
 ---
+
+## 2. Screenshot region
+
+**Region:** 792×383 at (275, 141)
+
+**Fix:** This card layout feels cramped — more vertical breathing room.
+
+![screenshot](./charlie-fix-2.png)
+
+---
 ```
 
-The queue survives reloads and page navigation via `localStorage` (`charlie-fixes:queue`).
+The queue survives reloads and page navigation via `localStorage` (`charlie-fixes:queue`). Screenshot blobs live in IndexedDB (`charlie-fixes` → `images`) and are cleaned up when the corresponding fix is deleted.
 
 ---
 
@@ -237,10 +267,15 @@ No. Charlie renders inside a Shadow DOM, so your page's CSS can't reach it and i
 Don't ship it to production. Use the dev-only patterns above.
 
 **Does it capture real screenshots?**
-Not yet — current MVP is element selection + comments. Screenshot capture via `html2canvas` is on the roadmap.
+Yes. Click **Screenshot** in the toolbar (or press `C`) and pick **Crop from area** or **Full image**. Real pixels are captured via `html2canvas`, stored in IndexedDB, and made available in a paste panel on **Hand off** — either copy the images one at a time into Claude Code, or download them as `charlie-fix-N.png` files.
+
+**Will Claude Code actually see my screenshots?**
+Two ways, both supported:
+1. **Paste flow** — after pasting the markdown prompt, click **Copy image** in the paste panel and paste each screenshot into Claude Code directly. The image arrives inline.
+2. **File flow** — download the PNGs (button in the paste panel) and drop them in your project next to the prompt. The markdown's `![](./charlie-fix-N.png)` references resolve, and Claude Code reads them via its Read tool.
 
 **Bundle size?**
-~12 kB gzipped. Preact-based, no external runtime dependencies.
+~64 kB gzipped with screenshot capture (html2canvas accounts for most of it). Without the screenshot path the overlay itself is ~12 kB; html2canvas only runs when you actually trigger a capture.
 
 ---
 
