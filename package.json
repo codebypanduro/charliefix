@@ -1,6 +1,6 @@
 {
   "name": "charlie-fixes",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Pinch it, prompt it. A floating overlay that turns DOM picks + comments into a single prompt for your AI agent.",
   "type": "module",
   "main": "./dist/charlie-fixes.iife.js",
@@ -13,14 +13,22 @@
       "types": "./dist/index.d.ts"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build && tsc --emitDeclarationOnly --outDir dist",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"
   },
-  "keywords": ["ai", "prompt", "devtools", "overlay", "annotation"],
+  "keywords": [
+    "ai",
+    "prompt",
+    "devtools",
+    "overlay",
+    "annotation"
+  ],
   "author": "Casper Panduro <cp@codebypanduro.dk>",
   "license": "MIT",
   "dependencies": {
