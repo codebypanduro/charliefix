@@ -5,12 +5,13 @@ import { Composer } from './components/Composer';
 import { QueuePanel } from './components/QueuePanel';
 import { PinsLayer } from './components/PinsLayer';
 import { CropLayer } from './components/CropLayer';
+import { ShotPastePanel } from './components/ShotPastePanel';
 import { Icon } from './icons';
 import { describeNode } from './lib/describeNode';
-import { generateMarkdown, orderedItems, imageFilename } from './lib/promptGen';
+import { generateMarkdown } from './lib/promptGen';
 import { loadQueue, saveQueue, type FixItem, type ShotMeta } from './lib/storage';
 import { captureRegion, type Rect } from './lib/captureImage';
-import { putImage, getImage, deleteImage } from './lib/imageStore';
+import { putImage, deleteImage } from './lib/imageStore';
 
 type Mode = 'idle' | 'picking' | 'cropping' | 'fullshot';
 
@@ -18,17 +19,6 @@ type ComposerState =
   | { el: Element; imageId?: undefined; shotMeta?: undefined }
   | { el?: undefined; imageId: string; shotMeta: ShotMeta }
   | null;
-
-function downloadBlob(blob: Blob, filename: string) {
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 0);
-}
 
 export function CharlieApp({ accent }: { accent: string }) {
   const [mode, setMode] = useState<Mode>('idle');
@@ -145,15 +135,6 @@ export function CharlieApp({ accent }: { accent: string }) {
     }
     setCopied(true);
     setTimeout(() => setCopied(false), 1800);
-
-    const ordered = orderedItems(items);
-    for (let i = 0; i < ordered.length; i++) {
-      const it = ordered[i];
-      if (!it.imageId) continue;
-      const blob = await getImage(it.imageId);
-      if (blob) downloadBlob(blob, imageFilename(i + 1));
-    }
-
     if (items.length > 0) setRemindClear(true);
   };
 
@@ -250,11 +231,16 @@ export function CharlieApp({ accent }: { accent: string }) {
         </button>
       </div>
 
-      {remindClear && items.length > 0 && (
+      {remindClear && items.length > 0 && hasImages && (
+        <ShotPastePanel
+          items={items}
+          onClear={clearAll}
+          onDismiss={() => setRemindClear(false)}
+        />
+      )}
+      {remindClear && items.length > 0 && !hasImages && (
         <div class="c-clear-reminder" role="status">
-          <span>
-            Prompt copied{hasImages ? ' — screenshots downloaded. Drop the PNGs in your project folder next to the prompt.' : ''}
-          </span>
+          <span>Prompt copied — clear the fix list when you're done?</span>
           <button class="c-btn-sm primary" onClick={clearAll}>
             {Icon.trash} Clear list
           </button>
