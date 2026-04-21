@@ -33,6 +33,78 @@ import 'charlie-fixes';
 
 The toolbar auto-mounts. Import it and forget it.
 
+### Option 3 — React component
+
+Install `charlie-fixes` and import the wrapper from `charlie-fixes/react`. The component renders nothing — the overlay paints itself into `document.body`.
+
+**Next.js (App Router)** — `app/layout.tsx`:
+
+```tsx
+import { CharlieFixes } from 'charlie-fixes/react';
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html>
+      <body>
+        {children}
+        {process.env.NODE_ENV === 'development' && <CharlieFixes />}
+      </body>
+    </html>
+  );
+}
+```
+
+**Plain React / Vite** — drop it into your root component:
+
+```tsx
+import { CharlieFixes } from 'charlie-fixes/react';
+
+{import.meta.env.DEV && <CharlieFixes accent="oklch(0.72 0.17 35)" />}
+```
+
+Props: `accent?: string`, `enabled?: boolean` (default `true`). Toggle `enabled` to mount/unmount the overlay at runtime.
+
+### Option 4 — Vue component
+
+Install `charlie-fixes` and import the wrapper from `charlie-fixes/vue`.
+
+**Vue 3** — `main.ts`:
+
+```ts
+import { createApp } from 'vue';
+import App from './App.vue';
+import { CharlieFixes } from 'charlie-fixes/vue';
+
+createApp(App).component('CharlieFixes', CharlieFixes).mount('#app');
+```
+
+```vue
+<template>
+  <CharlieFixes v-if="isDev" accent="oklch(0.72 0.17 35)" />
+</template>
+
+<script setup lang="ts">
+const isDev = import.meta.env.DEV;
+</script>
+```
+
+**Nuxt 3** — gate on dev and wrap in `<ClientOnly>` (the overlay is browser-only):
+
+```vue
+<template>
+  <ClientOnly>
+    <CharlieFixes v-if="dev" />
+  </ClientOnly>
+</template>
+
+<script setup lang="ts">
+import { CharlieFixes } from 'charlie-fixes/vue';
+const dev = process.dev;
+</script>
+```
+
+Props: `accent?: string`, `enabled?: boolean` (default `true`).
+
 ---
 
 ## Dev-only installation (recommended)
