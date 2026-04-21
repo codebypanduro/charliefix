@@ -72,7 +72,7 @@ function ThumbRow({
       </div>
       <div class="c-paste-meta">
         <div class="c-paste-title">
-          {item.kind === 'screenshot' ? 'Screenshot region' : `<${item.targetTag}>`}
+          {item.kind === 'screenshot' ? 'Screenshot' : `<${item.targetTag}>`}
         </div>
         {item.shotMeta && (
           <div class="c-paste-sub">
@@ -132,8 +132,8 @@ export function ShotPastePanel({ items, onClear, onDismiss }: Props) {
   const stepLabel = shots.length === 0
     ? ''
     : done
-    ? `Copy image 1/${shots.length} again`
-    : `Copy image ${step + 1}/${shots.length}${step > 0 ? ' — paste, then click again' : ''}`;
+    ? 'All copied — restart'
+    : `Copy image ${step + 1} of ${shots.length}`;
 
   return (
     <div class="c-paste-panel" role="status">
@@ -149,7 +149,7 @@ export function ShotPastePanel({ items, onClear, onDismiss }: Props) {
       {shots.length > 1 && (
         <div class="c-paste-stepper">
           <button
-            class={`c-btn-sm primary full ${done ? '' : ''}`}
+            class="c-btn-sm primary full"
             onClick={copyNext}
             disabled={stepBusy}
           >
@@ -164,6 +164,9 @@ export function ShotPastePanel({ items, onClear, onDismiss }: Props) {
             Reset
           </button>
         </div>
+      )}
+      {shots.length > 1 && step > 0 && !done && (
+        <div class="c-paste-steptip">Paste into Claude Code, then click again for the next one.</div>
       )}
       <div class="c-paste-list">
         {shots.map((it) => {

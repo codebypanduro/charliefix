@@ -873,7 +873,7 @@ button {
   right: 24px;
   pointer-events: auto;
   z-index: 11;
-  width: 360px;
+  width: 400px;
   max-height: 72vh;
   background: var(--c-bg);
   border: 1px solid var(--c-line-strong);
@@ -1013,7 +1013,18 @@ button {
   padding: 10px 12px;
   border-bottom: 1px solid var(--c-line);
   background: var(--c-surface);
+  align-items: center;
 }
 .c-paste-stepper .c-btn-sm.full {
   flex: 1;
+  width: auto;
+  white-space: nowrap;
+}
+.c-paste-steptip {
+  padding: 6px 14px 8px;
+  font-size: 11px;
+  color: var(--c-ink-2);
+  background: var(--c-surface);
+  border-bottom: 1px solid var(--c-line);
+  line-height: 1.35;
 }
