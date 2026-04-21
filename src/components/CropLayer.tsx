@@ -21,6 +21,11 @@ export function CropLayer({ fullshot, onCrop, onCancel }: Props) {
 
   useEffect(() => {
     if (fullshot) return;
+    const PLUS_CURSOR = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><line x1='12' y1='3' x2='12' y2='21' stroke='white' stroke-width='3' stroke-linecap='round'/><line x1='3' y1='12' x2='21' y2='12' stroke='white' stroke-width='3' stroke-linecap='round'/><line x1='12' y1='4' x2='12' y2='20' stroke='black' stroke-width='1.5' stroke-linecap='round'/><line x1='4' y1='12' x2='20' y2='12' stroke='black' stroke-width='1.5' stroke-linecap='round'/></svg>") 12 12, crosshair`;
+    const prevHtml = document.documentElement.style.cursor;
+    const prevBody = document.body.style.cursor;
+    document.documentElement.style.setProperty('cursor', PLUS_CURSOR, 'important');
+    document.body.style.setProperty('cursor', PLUS_CURSOR, 'important');
 
     let s: Point | null = null;
     let e: Point | null = null;
@@ -61,6 +66,8 @@ export function CropLayer({ fullshot, onCrop, onCancel }: Props) {
       window.removeEventListener('mousemove', move);
       window.removeEventListener('mouseup', up);
       window.removeEventListener('keydown', esc);
+      document.documentElement.style.cursor = prevHtml;
+      document.body.style.cursor = prevBody;
     };
   }, [fullshot, onCrop, onCancel]);
 
