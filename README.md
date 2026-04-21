@@ -1,5 +1,7 @@
 # Charlie fixes
 
+![Charlie toolbar](./docs/toolbar.png)
+
 Pinch it, prompt it. A floating overlay that lets you pick DOM elements on any page, write comments, and copy the whole batch as a single prompt for your AI agent (Claude, Cursor, Copilot — whatever you paste into).
 
 Built for "vibe coders" and developers who want to walk through a running site, point at what's broken, describe the fix, and hand the whole batch to an agent in one paste.
