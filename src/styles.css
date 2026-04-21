@@ -39,6 +39,7 @@ button {
   left: 50%;
   transform: translateX(-50%);
   pointer-events: auto;
+  z-index: 10;
   background: var(--c-bg);
   border: 1px solid var(--c-line-strong);
   border-radius: 999px;
@@ -644,6 +645,7 @@ button {
   left: 50%;
   transform: translateX(-50%);
   pointer-events: auto;
+  z-index: 10;
   background: var(--c-bg);
   border: 1px solid var(--c-line-strong);
   border-radius: 14px;
