@@ -1,8 +1,28 @@
-import { useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import { Charlie } from './Charlie';
 import { Icon } from '../icons';
 import type { FixItem } from '../lib/storage';
 import { generateMarkdown } from '../lib/promptGen';
+import { getObjectUrl } from '../lib/imageStore';
+
+function Thumb({ imageId }: { imageId: string }) {
+  const [url, setUrl] = useState<string | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    getObjectUrl(imageId).then((u) => {
+      if (!cancelled && u) setUrl(u);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [imageId]);
+  if (!url) return <div class="c-item-thumb c-item-thumb-empty" />;
+  return (
+    <div class="c-item-thumb">
+      <img src={url} alt="Screenshot" />
+    </div>
+  );
+}
 
 type Props = {
   items: FixItem[];
@@ -66,12 +86,24 @@ export function QueuePanel({ items, onDelete, onEdit, onClear, onClose, onCopy, 
             items.map((it, i) => (
               <div key={it.id} class={`c-item ${editingId === it.id ? 'editing' : ''}`}>
                 <div class="c-item-num">{i + 1}</div>
+                {it.imageId && <Thumb imageId={it.imageId} />}
                 <div class="c-item-body">
                   <div class="c-item-target">
-                    <span class="tag">&lt;{it.targetTag}&gt;</span>&nbsp;{it.targetSelector}
-                    {it.component && (
+                    {it.targetSelector ? (
                       <>
-                        &nbsp;·&nbsp;<span class="tag">{it.component}</span>
+                        <span class="tag">&lt;{it.targetTag}&gt;</span>&nbsp;{it.targetSelector}
+                        {it.component && (
+                          <>
+                            &nbsp;·&nbsp;<span class="tag">{it.component}</span>
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <span class="tag">Screenshot</span>
+                        {it.shotMeta && (
+                          <>&nbsp;{it.shotMeta.w}×{it.shotMeta.h}</>
+                        )}
                       </>
                     )}
                   </div>

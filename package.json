@@ -21,14 +21,24 @@
       "import": "./dist/vue.mjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build && VITE_BUILD_TARGET=wrappers vite build && tsc --emitDeclarationOnly --outDir dist",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"
   },
-  "keywords": ["ai", "prompt", "devtools", "overlay", "annotation", "react", "vue"],
+  "keywords": [
+    "ai",
+    "prompt",
+    "devtools",
+    "overlay",
+    "annotation",
+    "react",
+    "vue"
+  ],
   "author": "Casper Panduro <cp@codebypanduro.dk>",
   "license": "MIT",
   "repository": {
@@ -40,6 +50,7 @@
     "url": "https://github.com/codebypanduro/charliefix/issues"
   },
   "dependencies": {
+    "html2canvas": "^1.4.1",
     "preact": "^10.22.0"
   },
   "peerDependencies": {
@@ -47,15 +58,19 @@
     "vue": ">=3"
   },
   "peerDependenciesMeta": {
-    "react": { "optional": true },
-    "vue": { "optional": true }
+    "react": {
+      "optional": true
+    },
+    "vue": {
+      "optional": true
+    }
   },
   "devDependencies": {
-    "typescript": "^5.5.0",
-    "vite": "^5.4.0",
     "@preact/preset-vite": "^2.8.0",
     "@types/react": "^18.3.0",
     "react": "^18.3.0",
+    "typescript": "^5.5.0",
+    "vite": "^5.4.0",
     "vue": "^3.4.0"
   }
 }

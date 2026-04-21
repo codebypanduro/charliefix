@@ -350,7 +350,7 @@ button {
 /* Queue */
 .c-queue {
   position: fixed;
-  bottom: 84px;
+  bottom: 96px;
   left: 50%;
   transform: translateX(-50%);
   pointer-events: auto;
@@ -362,8 +362,18 @@ button {
   box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
-  animation: cPop 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: cQueuePop 0.18s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
+}
+@keyframes cQueuePop {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
 }
 .c-queue-head {
   padding: 14px 16px;
