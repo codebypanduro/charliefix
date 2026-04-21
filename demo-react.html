@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Charlie fixes — React demo</title>
+    <link rel="stylesheet" href="/demo/landing.css" />
+    <style>
+      .card { padding: 20px; border: 1px solid #e5e5e5; border-radius: 12px; margin: 12px 0; }
+      .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+      .price { font-size: 24px; font-weight: 600; }
+      .badge { display: inline-block; padding: 2px 8px; background: #eef; border-radius: 999px; font-size: 12px; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="module">
+      import React from 'https://esm.sh/react@18.3.1';
+      import ReactDOM from 'https://esm.sh/react-dom@18.3.1/client';
+
+      const h = React.createElement;
+
+      function Header() {
+        return h('nav', { className: 'nav wrap' },
+          h('div', { className: 'logo' },
+            h('div', { className: 'logo-mark' }, 'R'),
+            'Relaybin (React)'
+          ),
+          h('div', { className: 'nav-cta' },
+            h(SignInButton),
+            h(CTAButton, null, 'Start free')
+          )
+        );
+      }
+
+      function SignInButton() {
+        return h('button', { className: 'btn btn-ghost' }, 'Sign in');
+      }
+
+      function CTAButton({ children }) {
+        return h('button', { className: 'btn btn-solid' }, children);
+      }
+
+      function Hero() {
+        return h('header', { className: 'hero wrap' },
+          h('span', { className: 'eyebrow' }, 'React demo page'),
+          h('h1', null, 'Try Charlie on a ', h('em', null, 'React'), ' tree.'),
+          h('p', null, 'Pick any element below. The fix list should show a Component name next to the selector.'),
+          h('div', { className: 'hero-cta' },
+            h('button', { className: 'btn-primary' }, 'Primary CTA'),
+            h('button', { className: 'btn-secondary' }, 'Secondary')
+          )
+        );
+      }
+
+      function ProductCard({ title, price, badge }) {
+        return h('div', { className: 'card' },
+          badge && h('span', { className: 'badge' }, badge),
+          h('h3', null, title),
+          h('div', { className: 'price' }, price),
+          h(CTAButton, null, 'Add to cart')
+        );
+      }
+
+      function ProductGrid() {
+        return h('section', { className: 'wrap' },
+          h('h2', { className: 'section-title' }, 'Products'),
+          h('div', { className: 'grid' },
+            h(ProductCard, { title: 'Starter', price: '$9', badge: 'Popular' }),
+            h(ProductCard, { title: 'Pro', price: '$29' }),
+            h(ProductCard, { title: 'Team', price: '$99', badge: 'New' })
+          )
+        );
+      }
+
+      function Layout({ children }) {
+        return h('div', { className: 'app-layout' }, children);
+      }
+
+      function App() {
+        return h(Layout, null,
+          h(Header),
+          h(Hero),
+          h(ProductGrid),
+          h('footer', { className: 'wrap' }, '© 2026 Relaybin, Inc.')
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(h(App));
+    </script>
+
+    <script type="module" src="/src/index.ts"></script>
+  </body>
+</html>
