@@ -17,6 +17,7 @@ export function CharlieApp({ accent }: { accent: string }) {
   const [items, setItems] = useState<FixItem[]>(() => loadQueue());
   const [composerEl, setComposerEl] = useState<Element | null>(null);
   const [copied, setCopied] = useState(false);
+  const [remindClear, setRemindClear] = useState(false);
 
   useEffect(() => {
     saveQueue(items);
@@ -56,6 +57,11 @@ export function CharlieApp({ accent }: { accent: string }) {
       targetSelector: desc.selector,
       targetText: desc.text,
       createdAt: Date.now(),
+      url: desc.url,
+      route: desc.route,
+      component: desc.component,
+      componentChain: desc.componentChain,
+      source: desc.source,
     };
     setItems((prev) => [...prev, item]);
     setComposerEl(null);
@@ -70,6 +76,12 @@ export function CharlieApp({ accent }: { accent: string }) {
     }
     setCopied(true);
     setTimeout(() => setCopied(false), 1800);
+    if (items.length > 0) setRemindClear(true);
+  };
+
+  const clearAll = () => {
+    setItems([]);
+    setRemindClear(false);
   };
 
   const handoffDisabled = items.length === 0;
@@ -111,6 +123,18 @@ export function CharlieApp({ accent }: { accent: string }) {
         </button>
       </div>
 
+      {remindClear && items.length > 0 && (
+        <div class="c-clear-reminder" role="status">
+          <span>Prompt copied — clear the fix list when you're done?</span>
+          <button class="c-btn-sm primary" onClick={clearAll}>
+            {Icon.trash} Clear list
+          </button>
+          <button class="c-btn-sm ghost" onClick={() => setRemindClear(false)} title="Dismiss">
+            {Icon.x}
+          </button>
+        </div>
+      )}
+
       <PinsLayer
         composerEl={composerEl}
         items={items}
@@ -132,7 +156,7 @@ export function CharlieApp({ accent }: { accent: string }) {
           onEdit={(id, comment) =>
             setItems((p) => p.map((it) => (it.id === id ? { ...it, comment } : it)))
           }
-          onClear={() => setItems([])}
+          onClear={clearAll}
           onClose={() => setQueueOpen(false)}
           onCopy={copyPrompt}
           copied={copied}
