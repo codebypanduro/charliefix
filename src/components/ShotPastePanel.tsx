@@ -104,18 +104,67 @@ function ThumbRow({
 export function ShotPastePanel({ items, onClear, onDismiss }: Props) {
   const ordered = orderedItems(items);
   const shots = ordered.filter((it) => it.imageId);
+  const [step, setStep] = useState(0);
+  const [stepBusy, setStepBusy] = useState(false);
+
+  const copyNext = async () => {
+    if (stepBusy) return;
+    const idx = step >= shots.length ? 0 : step;
+    const it = shots[idx];
+    if (!it?.imageId) return;
+    setStepBusy(true);
+    try {
+      const blob = await getImage(it.imageId);
+      if (blob) {
+        await navigator.clipboard.write([
+          new ClipboardItem({ 'image/png': blob }),
+        ]);
+      }
+      setStep(idx + 1);
+    } catch (err) {
+      console.error('[charlie-fixes] stepper copy failed', err);
+    } finally {
+      setStepBusy(false);
+    }
+  };
+
+  const done = shots.length > 0 && step >= shots.length;
+  const stepLabel = shots.length === 0
+    ? ''
+    : done
+    ? `Copy image 1/${shots.length} again`
+    : `Copy image ${step + 1}/${shots.length}${step > 0 ? ' — paste, then click again' : ''}`;
 
   return (
     <div class="c-paste-panel" role="status">
       <div class="c-paste-head">
         <strong>Prompt copied</strong>
         <span class="c-paste-hint">
-          Paste into Claude Code, then copy each screenshot below and paste it.
+          Paste the prompt into Claude Code, then copy each screenshot and paste it. The browser only holds one image at a time.
         </span>
         <button class="c-paste-close" onClick={onDismiss} aria-label="Dismiss">
           {Icon.x}
         </button>
       </div>
+      {shots.length > 1 && (
+        <div class="c-paste-stepper">
+          <button
+            class={`c-btn-sm primary full ${done ? '' : ''}`}
+            onClick={copyNext}
+            disabled={stepBusy}
+          >
+            {done ? Icon.check : Icon.copy} {stepLabel}
+          </button>
+          <button
+            class="c-btn-sm ghost"
+            onClick={() => setStep(0)}
+            disabled={step === 0 || stepBusy}
+            title="Restart from image 1"
+          >
+            Reset
+          </button>
+        </div>
+      )}
       <div class="c-paste-list">
         {shots.map((it) => {
           const index = ordered.indexOf(it);

@@ -1006,3 +1006,14 @@ button {
   display: flex;
   justify-content: flex-end;
 }
+
+.c-paste-stepper {
+  display: flex;
+  gap: 6px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--c-line);
+  background: var(--c-surface);
+}
+.c-paste-stepper .c-btn-sm.full {
+  flex: 1;
+}
