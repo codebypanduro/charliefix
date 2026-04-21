@@ -17,8 +17,7 @@ export function CharlieFixes({ accent, enabled = true }: CharlieFixesProps): nul
     }
 
     let cancelled = false;
-    const load = new Function('return import("charlie-fixes")') as () => Promise<unknown>;
-    load().then(() => {
+    import('charlie-fixes').then(() => {
       if (cancelled) {
         window.CharlieFixes?.unmount();
       }

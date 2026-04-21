@@ -8,8 +8,7 @@ async function ensureMounted(accent?: string): Promise<void> {
   if (window.CharlieFixes) {
     window.CharlieFixes.mount();
   } else {
-    const specifier = 'charlie-fixes';
-    await import(/* @vite-ignore */ specifier);
+    await import('charlie-fixes');
   }
 }
 
