@@ -33,6 +33,7 @@ function downloadBlob(blob: Blob, filename: string) {
 export function CharlieApp({ accent }: { accent: string }) {
   const [mode, setMode] = useState<Mode>('idle');
   const [queueOpen, setQueueOpen] = useState(false);
+  const [shotMenuOpen, setShotMenuOpen] = useState(false);
   const [items, setItems] = useState<FixItem[]>(() => loadQueue());
   const [composer, setComposer] = useState<ComposerState>(null);
   const [copied, setCopied] = useState(false);
@@ -49,19 +50,20 @@ export function CharlieApp({ accent }: { accent: string }) {
       if (e.metaKey || e.ctrlKey) return;
       if (e.key === 'Escape') {
         if (composer) setComposer(null);
+        else if (shotMenuOpen) setShotMenuOpen(false);
         else if (mode !== 'idle') setMode('idle');
         else if (queueOpen) setQueueOpen(false);
       } else if (e.key === 's' && mode === 'idle' && !composer) {
         setMode('picking');
       } else if (e.key === 'c' && mode === 'idle' && !composer) {
-        setMode('cropping');
+        setShotMenuOpen((o) => !o);
       } else if (e.key === 'l' && mode === 'idle' && !composer) {
         setQueueOpen((o) => !o);
       }
     };
     window.addEventListener('keydown', key);
     return () => window.removeEventListener('keydown', key);
-  }, [mode, composer, queueOpen]);
+  }, [mode, composer, queueOpen, shotMenuOpen]);
 
   const onPick = (el: Element) => {
     setMode('idle');
@@ -187,20 +189,48 @@ export function CharlieApp({ accent }: { accent: string }) {
         >
           {Icon.cursor} Select <span class="kbd">S</span>
         </button>
-        <button
-          class={`c-tool-btn ${mode === 'cropping' ? 'active' : ''}`}
-          onClick={() => setMode(mode === 'cropping' ? 'idle' : 'cropping')}
-          title="Crop a region (C)"
-        >
-          {Icon.crop} Crop <span class="kbd">C</span>
-        </button>
-        <button
-          class={`c-tool-btn ${mode === 'fullshot' ? 'active' : ''}`}
-          onClick={() => setMode('fullshot')}
-          title="Full viewport screenshot"
-        >
-          {Icon.camera} Full
-        </button>
+        <div class="c-tool-wrap">
+          <button
+            class={`c-tool-btn ${mode === 'cropping' || mode === 'fullshot' || shotMenuOpen ? 'active' : ''}`}
+            onClick={() => setShotMenuOpen((o) => !o)}
+            title="Screenshot (C)"
+          >
+            {Icon.camera} Screenshot <span class="kbd">C</span>
+          </button>
+          {shotMenuOpen && (
+            <>
+              <div class="c-popover-backdrop" onClick={() => setShotMenuOpen(false)} />
+              <div class="c-popover" role="menu">
+                <button
+                  class="c-popover-item"
+                  onClick={() => {
+                    setShotMenuOpen(false);
+                    setMode('cropping');
+                  }}
+                >
+                  <span class="c-popover-icon">{Icon.crop}</span>
+                  <span class="c-popover-label">
+                    <strong>Crop from area</strong>
+                    <small>Drag a region to capture</small>
+                  </span>
+                </button>
+                <button
+                  class="c-popover-item"
+                  onClick={() => {
+                    setShotMenuOpen(false);
+                    setMode('fullshot');
+                  }}
+                >
+                  <span class="c-popover-icon">{Icon.camera}</span>
+                  <span class="c-popover-label">
+                    <strong>Full image</strong>
+                    <small>Capture the whole viewport</small>
+                  </span>
+                </button>
+              </div>
+            </>
+          )}
+        </div>
         <div class="c-divider" />
         <button
           class={`c-tool-btn c-queue-btn ${queueOpen ? 'active' : ''}`}

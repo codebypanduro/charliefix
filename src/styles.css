@@ -708,8 +708,8 @@ button {
   gap: 8px;
   padding: 8px 14px;
   background: var(--c-surface);
-  color: var(--c-text);
-  border: 1px solid var(--c-border);
+  color: var(--c-ink);
+  border: 1px solid var(--c-line-strong);
   border-radius: 999px;
   font-size: 12px;
   font-weight: 500;
@@ -741,7 +741,7 @@ button {
   margin: 0 12px;
   padding: 6px;
   background: var(--c-surface-2);
-  border: 1px solid var(--c-border);
+  border: 1px solid var(--c-line-strong);
   border-radius: 8px;
   max-height: 140px;
   overflow: hidden;
@@ -764,7 +764,7 @@ button {
   border-radius: 6px;
   overflow: hidden;
   background: var(--c-surface-2);
-  border: 1px solid var(--c-border);
+  border: 1px solid var(--c-line-strong);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -778,4 +778,90 @@ button {
 }
 .c-item-thumb-empty {
   opacity: 0.5;
+}
+
+/* ——— Toolbar popover (Screenshot menu) ——— */
+.c-tool-wrap {
+  position: relative;
+  display: inline-flex;
+}
+.c-popover-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: transparent;
+}
+.c-popover {
+  position: absolute;
+  bottom: calc(100% + 18px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  min-width: 220px;
+  padding: 6px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-line-strong);
+  border-radius: 12px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.32), 0 2px 6px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.c-popover::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  background: var(--c-surface);
+  border-right: 1px solid var(--c-line-strong);
+  border-bottom: 1px solid var(--c-line-strong);
+  rotate: 45deg;
+  margin-top: -6px;
+}
+.c-popover-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: var(--c-ink);
+  text-align: left;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+}
+.c-popover-item:hover,
+.c-popover-item:focus-visible {
+  background: var(--c-surface-2);
+  outline: none;
+}
+.c-popover-icon {
+  flex: 0 0 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-accent, currentColor);
+}
+.c-popover-icon svg {
+  width: 18px;
+  height: 18px;
+}
+.c-popover-label {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.c-popover-label strong {
+  font-weight: 600;
+}
+.c-popover-label small {
+  opacity: 0.7;
+  font-size: 11px;
+  margin-top: 2px;
 }
