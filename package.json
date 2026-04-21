@@ -31,6 +31,14 @@
   "keywords": ["ai", "prompt", "devtools", "overlay", "annotation", "react", "vue"],
   "author": "Casper Panduro <cp@codebypanduro.dk>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codebypanduro/charliefix.git"
+  },
+  "homepage": "https://github.com/codebypanduro/charliefix#readme",
+  "bugs": {
+    "url": "https://github.com/codebypanduro/charliefix/issues"
+  },
   "dependencies": {
     "preact": "^10.22.0"
   },
