@@ -350,7 +350,7 @@ button {
 /* Queue */
 .c-queue {
   position: fixed;
-  bottom: 84px;
+  bottom: 96px;
   left: 50%;
   transform: translateX(-50%);
   pointer-events: auto;
@@ -362,8 +362,18 @@ button {
   box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
-  animation: cPop 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: cQueuePop 0.18s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
+}
+@keyframes cQueuePop {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
 }
 .c-queue-head {
   padding: 14px 16px;
@@ -678,4 +688,343 @@ button {
   border-radius: 99px;
   border: 3px solid transparent;
   background-clip: padding-box;
+}
+
+/* ——— Crop layer ——— */
+.c-crop-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483640;
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><line x1='12' y1='3' x2='12' y2='21' stroke='white' stroke-width='3' stroke-linecap='round'/><line x1='3' y1='12' x2='21' y2='12' stroke='white' stroke-width='3' stroke-linecap='round'/><line x1='12' y1='4' x2='12' y2='20' stroke='black' stroke-width='1.5' stroke-linecap='round'/><line x1='4' y1='12' x2='20' y2='12' stroke='black' stroke-width='1.5' stroke-linecap='round'/></svg>") 12 12, crosshair;
+  background: rgba(10, 10, 14, 0.28);
+}
+.c-crop-hint {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--c-surface);
+  color: var(--c-ink);
+  border: 1px solid var(--c-line-strong);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+}
+.c-crop-rect {
+  position: fixed;
+  border: 2px dashed var(--c-accent, #ff9f40);
+  background: color-mix(in oklch, var(--c-accent, #ff9f40) 14%, transparent);
+  box-shadow: 0 0 0 9999px rgba(10, 10, 14, 0.28);
+  pointer-events: none;
+  border-radius: 2px;
+}
+.c-crop-dims {
+  position: fixed;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--c-accent, #ff9f40);
+  border-radius: 6px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* ——— Composer thumbnail ——— */
+.c-composer-shot {
+  margin: 0 12px;
+  padding: 6px;
+  background: var(--c-surface-2);
+  border: 1px solid var(--c-line-strong);
+  border-radius: 8px;
+  max-height: 140px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+.c-composer-shot img {
+  max-width: 100%;
+  max-height: 126px;
+  object-fit: contain;
+  display: block;
+  border-radius: 4px;
+}
+
+/* ——— Queue item thumbnail ——— */
+.c-item-thumb {
+  flex: 0 0 56px;
+  width: 56px;
+  height: 56px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--c-surface-2);
+  border: 1px solid var(--c-line-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 4px;
+}
+.c-item-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.c-item-thumb-empty {
+  opacity: 0.5;
+}
+
+/* ——— Toolbar popover (Screenshot menu) ——— */
+.c-tool-wrap {
+  position: relative;
+  display: inline-flex;
+}
+.c-popover-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: transparent;
+}
+.c-popover {
+  position: absolute;
+  bottom: calc(100% + 18px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  min-width: 220px;
+  padding: 6px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-line-strong);
+  border-radius: 12px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.32), 0 2px 6px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.c-popover::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  background: var(--c-surface);
+  border-right: 1px solid var(--c-line-strong);
+  border-bottom: 1px solid var(--c-line-strong);
+  rotate: 45deg;
+  margin-top: -6px;
+}
+.c-popover-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: var(--c-ink);
+  text-align: left;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+}
+.c-popover-item:hover,
+.c-popover-item:focus-visible {
+  background: var(--c-surface-2);
+  outline: none;
+}
+.c-popover-icon {
+  flex: 0 0 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-accent, currentColor);
+}
+.c-popover-icon svg {
+  width: 18px;
+  height: 18px;
+}
+.c-popover-label {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.c-popover-label strong {
+  font-weight: 600;
+}
+.c-popover-label small {
+  opacity: 0.7;
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+/* ——— Post-handoff screenshot paste panel ——— */
+.c-paste-panel {
+  position: fixed;
+  bottom: 96px;
+  right: 24px;
+  pointer-events: auto;
+  z-index: 11;
+  width: 400px;
+  max-height: 72vh;
+  background: var(--c-bg);
+  border: 1px solid var(--c-line-strong);
+  border-radius: 14px;
+  box-shadow: 0 26px 60px -20px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: cPop 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.c-paste-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--c-line);
+}
+.c-paste-head strong {
+  grid-column: 1;
+  font-size: 13px;
+  font-weight: 600;
+}
+.c-paste-hint {
+  grid-column: 1;
+  font-size: 11px;
+  color: var(--c-ink-2);
+  line-height: 1.35;
+  margin-top: 2px;
+}
+.c-paste-close {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  background: transparent;
+  border: 0;
+  color: var(--c-ink-2);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.c-paste-close:hover {
+  background: var(--c-surface-2);
+  color: var(--c-ink);
+}
+.c-paste-close svg {
+  width: 12px;
+  height: 12px;
+}
+.c-paste-list {
+  overflow-y: auto;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.c-paste-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-radius: 10px;
+  background: var(--c-surface);
+}
+.c-paste-row:hover {
+  background: var(--c-surface-2);
+}
+.c-paste-num {
+  flex: 0 0 32px;
+  font-family: 'SF Mono', ui-monospace, monospace;
+  font-size: 10px;
+  color: var(--c-ink-2);
+  text-align: center;
+}
+.c-paste-thumb {
+  flex: 0 0 56px;
+  width: 56px;
+  height: 42px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--c-surface-2);
+  border: 1px solid var(--c-line);
+}
+.c-paste-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.c-paste-meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.c-paste-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--c-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.c-paste-sub {
+  font-family: 'SF Mono', ui-monospace, monospace;
+  font-size: 10px;
+  color: var(--c-ink-2);
+}
+.c-paste-actions {
+  display: flex;
+  gap: 4px;
+  flex: 0 0 auto;
+}
+.c-paste-actions .c-btn-sm {
+  height: 26px;
+  padding: 0 9px;
+  font-size: 11px;
+}
+.c-btn-sm.primary.ok {
+  background: #22c55e;
+  color: #0a1a0a;
+}
+.c-paste-foot {
+  padding: 10px 14px;
+  border-top: 1px solid var(--c-line);
+  background: var(--c-surface);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.c-paste-stepper {
+  display: flex;
+  gap: 6px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--c-line);
+  background: var(--c-surface);
+  align-items: center;
+}
+.c-paste-stepper .c-btn-sm.full {
+  flex: 1;
+  width: auto;
+  white-space: nowrap;
+}
+.c-paste-steptip {
+  padding: 6px 14px 8px;
+  font-size: 11px;
+  color: var(--c-ink-2);
+  background: var(--c-surface);
+  border-bottom: 1px solid var(--c-line);
+  line-height: 1.35;
 }
