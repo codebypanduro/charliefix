@@ -168,7 +168,7 @@ export function CharlieApp({ accent }: { accent: string }) {
 
   const mood =
     mode === 'picking' ? 'targeting' :
-    mode === 'cropping' || mode === 'fullshot' ? 'excited' :
+    mode === 'cropping' || mode === 'fullshot' ? 'targeting' :
     composer ? 'happy' : 'idle';
 
   return (

@@ -2,16 +2,15 @@ import html2canvas from 'html2canvas';
 
 export type Rect = { x: number; y: number; w: number; h: number };
 
-const HIDE_CLASS = 'charlie-capturing';
-
 async function withOverlayHidden<T>(fn: () => Promise<T>): Promise<T> {
-  const root = document.getElementById('charlie-fixes-root');
-  root?.classList.add(HIDE_CLASS);
+  const root = document.getElementById('charlie-fixes-root') as HTMLElement | null;
+  const prev = root?.style.visibility ?? '';
+  if (root) root.style.visibility = 'hidden';
   try {
     await new Promise((r) => requestAnimationFrame(() => r(null)));
     return await fn();
   } finally {
-    root?.classList.remove(HIDE_CLASS);
+    if (root) root.style.visibility = prev;
   }
 }
 
