@@ -26,6 +26,7 @@ export default defineConfig(() => {
           external: ['react', 'react-dom', 'vue', 'charlie-fixes'],
           output: {
             entryFileNames: '[name].mjs',
+            banner: (chunk) => (chunk.name === 'react' ? "'use client';" : ''),
           },
         },
       },
