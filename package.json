@@ -50,7 +50,7 @@
     "url": "https://github.com/codebypanduro/charliefix/issues"
   },
   "dependencies": {
-    "html2canvas": "^1.4.1",
+    "html2canvas-pro": "^2.0.2",
     "preact": "^10.22.0"
   },
   "peerDependencies": {

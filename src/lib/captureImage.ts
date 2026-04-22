@@ -1,4 +1,4 @@
-import html2canvas from 'html2canvas';
+import html2canvas from 'html2canvas-pro';
 
 export type Rect = { x: number; y: number; w: number; h: number };
 
