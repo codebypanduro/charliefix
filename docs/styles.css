@@ -190,6 +190,17 @@ img { max-width: 100%; display: block; }
 }
 .demo-cta:hover { background: #fff; }
 
+@media (max-width: 640px) {
+  .demo-bar { padding: 6px; gap: 2px; flex-wrap: nowrap; }
+  .demo-mascot { width: 36px; height: 36px; }
+  .demo-mascot svg { width: 28px; height: 28px; }
+  .demo-btn { padding: 0 10px; gap: 0; }
+  .demo-btn .demo-label,
+  .demo-btn .demo-kbd { display: none; }
+  .demo-cta { padding: 0 12px; }
+  .demo-divider { margin: 0; }
+}
+
 /* sections */
 section { padding: 96px 0; border-top: 1px solid var(--line); }
 .section-eyebrow { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 14px; }

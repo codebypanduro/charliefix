@@ -140,6 +140,39 @@ button {
   cursor: not-allowed;
 }
 
+@media (max-width: 640px) {
+  .charlie-bar {
+    bottom: 16px;
+    padding: 6px;
+    gap: 2px;
+  }
+  .charlie-bar .c-tool-btn {
+    padding: 0 10px;
+    gap: 0;
+  }
+  .charlie-bar .c-tool-btn .c-label,
+  .charlie-bar .c-tool-btn .kbd {
+    display: none;
+  }
+  .charlie-bar .c-primary-cta {
+    padding: 0 12px;
+  }
+  .charlie-bar .c-count-badge {
+    margin-left: 2px;
+  }
+  .charlie-bar .c-mascot-slot {
+    width: 36px;
+    height: 36px;
+  }
+  .charlie-bar .c-mascot-slot svg {
+    width: 28px;
+    height: 28px;
+  }
+  .charlie-bar .c-divider {
+    margin: 0;
+  }
+}
+
 /* Selection */
 .c-select-layer {
   position: fixed;
