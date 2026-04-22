@@ -16,6 +16,14 @@ window.__CHARLIE__ = {
     });
   });
 
+  document.querySelectorAll('[data-trigger-key]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const key = btn.getAttribute('data-trigger-key');
+      if (!key) return;
+      window.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }));
+    });
+  });
+
   document.querySelectorAll('.code .copy').forEach((btn) => {
     btn.addEventListener('click', async () => {
       const code = btn.parentElement.querySelector('pre')?.innerText ?? '';
