@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Charlie fixes — pinch it, prompt it</title>
+  <meta name="description" content="A floating overlay that lets you pick DOM elements on any page, write comments, and copy the whole batch as a single prompt for your AI agent." />
+  <meta property="og:title" content="Charlie fixes — pinch it, prompt it" />
+  <meta property="og:description" content="Walk through a running site, point at what's broken, describe the fix, and hand the whole batch to your AI agent in one paste." />
+  <meta property="og:image" content="./toolbar.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+
+<header class="wrap">
+  <nav class="nav">
+    <a class="logo" href="#top">
+      <span class="logo-mark">C</span>
+      <span>Charlie fixes</span>
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#install">Install</a>
+      <a href="#shortcuts">Shortcuts</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="https://www.npmjs.com/package/charlie-fixes" target="_blank" rel="noopener">npm</a>
+      <a class="btn btn-solid" href="https://github.com/codebypanduro/charliefix" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="hero" style="border-top: 0; padding-top: 72px;">
+    <div class="wrap">
+      <span class="eyebrow"><span class="dot"></span> Live on this page</span>
+      <h1>Pinch it, <em>prompt it.</em></h1>
+      <p class="lede">
+        A floating overlay that lets you pick DOM elements on any page, write
+        comments, and copy the whole batch as a single prompt for your AI
+        agent — Claude, Cursor, Copilot, whatever you paste into.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-solid" href="#install">Install</a>
+        <a class="btn btn-ghost" href="https://github.com/codebypanduro/charliefix" target="_blank" rel="noopener">View on GitHub →</a>
+      </div>
+      <div class="hint">
+        Try it now — press <span class="kbd">S</span> to pick an element on this page.
+      </div>
+
+      <div class="shot">
+        <img src="./toolbar.png" alt="Charlie fixes toolbar" />
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="wrap">
+      <div class="section-eyebrow">What it does</div>
+      <h2 class="section-title">Walk the page, <em>point at what's broken</em>, hand it off.</h2>
+      <p class="section-sub">
+        Built for vibe coders and developers who'd rather click the issue than describe it.
+        Collect fixes as you go. Paste the batch when you're done.
+      </p>
+
+      <div class="feature-grid">
+        <div class="feature">
+          <div class="feature-icon">S</div>
+          <h3>Element picker</h3>
+          <p>Hover to highlight, click to capture. Charlie records the selector, text, and surrounding component hints for your prompt.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">C</div>
+          <h3>Screenshot capture</h3>
+          <p>Crop a region or grab the full viewport via html2canvas. Shots save alongside their note and survive reloads.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">⎇</div>
+          <h3>Shadow DOM isolated</h3>
+          <p>The overlay lives in its own shadow root. Your page's CSS can't reach it, its CSS can't reach you.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">↯</div>
+          <h3>One-prompt handoff</h3>
+          <p>Every fix, every selector, every screenshot — bundled into a single markdown prompt ready to paste into Claude, Cursor, or Copilot.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">⌘</div>
+          <h3>Keyboard-first</h3>
+          <p><span class="kbd">S</span> select, <span class="kbd">C</span> capture, <span class="kbd">L</span> list. Your hands stay on the keyboard.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">64</div>
+          <h3>~64&nbsp;kB gzipped</h3>
+          <p>Core overlay is ~12&nbsp;kB. html2canvas only loads when you actually trigger a capture.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="install">
+    <div class="wrap">
+      <div class="section-eyebrow">Install</div>
+      <h2 class="section-title">One line. <em>Any project.</em></h2>
+      <p class="section-sub">
+        Drop it in via <code>&lt;script&gt;</code>, npm, React, or Vue. Gate on dev —
+        you almost certainly don't want Charlie loaded in production.
+      </p>
+
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" aria-selected="true" data-tab="cdn">CDN</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="npm">npm</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="react">React</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="vue">Vue</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="config">Config</button>
+      </div>
+
+      <div class="tab-panel active" data-panel="cdn">
+        <div class="code">
+          <button class="copy" type="button">Copy</button>
+<pre>&lt;script src="https://unpkg.com/charlie-fixes"&gt;&lt;/script&gt;</pre>
+        </div>
+        <p class="install-note">Drops a toolbar at the bottom of every page the script loads on. Nothing else to configure.</p>
+      </div>
+
+      <div class="tab-panel" data-panel="npm">
+        <div class="code">
+          <button class="copy" type="button">Copy</button>
+<pre>npm install -D charlie-fixes
+
+// anywhere that runs on the client:
+import 'charlie-fixes';</pre>
+        </div>
+        <p class="install-note">Auto-mounts on import. Gate behind <code>import.meta.env.DEV</code> or <code>process.env.NODE_ENV</code>.</p>
+      </div>
+
+      <div class="tab-panel" data-panel="react">
+        <div class="code">
+          <button class="copy" type="button">Copy</button>
+<pre>import { CharlieFixes } from 'charlie-fixes/react';
+
+export default function RootLayout({ children }) {
+  return (
+    &lt;html&gt;
+      &lt;body&gt;
+        {children}
+        {process.env.NODE_ENV === 'development' &&amp;&amp; &lt;CharlieFixes /&gt;}
+      &lt;/body&gt;
+    &lt;/html&gt;
+  );
+}</pre>
+        </div>
+        <p class="install-note">Props: <code>accent?: string</code>, <code>enabled?: boolean</code>. Toggle <code>enabled</code> to mount/unmount at runtime.</p>
+      </div>
+
+      <div class="tab-panel" data-panel="vue">
+        <div class="code">
+          <button class="copy" type="button">Copy</button>
+<pre>import { createApp } from 'vue';
+import App from './App.vue';
+import { CharlieFixes } from 'charlie-fixes/vue';
+
+createApp(App)
+  .component('CharlieFixes', CharlieFixes)
+  .mount('#app');
+
+// template:
+// &lt;CharlieFixes v-if="isDev" accent="oklch(0.72 0.17 35)" /&gt;</pre>
+        </div>
+        <p class="install-note">For Nuxt, wrap in <code>&lt;ClientOnly&gt;</code> — the overlay is browser-only.</p>
+      </div>
+
+      <div class="tab-panel" data-panel="config">
+        <div class="code">
+          <button class="copy" type="button">Copy</button>
+<pre>&lt;script&gt;
+  window.__CHARLIE__ = {
+    accent: 'oklch(0.72 0.17 35)', // any CSS color
+    mount: 'auto',                  // 'manual' to skip auto-mount
+  };
+&lt;/script&gt;
+&lt;script src="https://unpkg.com/charlie-fixes"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+  // if mount: 'manual'
+  window.CharlieFixes.mount();
+  window.CharlieFixes.unmount();
+&lt;/script&gt;</pre>
+        </div>
+      </div>
+
+      <div class="live">
+        <div class="mark">C</div>
+        <p>
+          <strong>This page is running Charlie fixes.</strong>
+          Press <span class="kbd">S</span> to pick an element,
+          <span class="kbd">C</span> to crop a screenshot,
+          <span class="kbd">L</span> to open the queue.
+          <span class="kbd">Esc</span> cancels.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="shortcuts">
+    <div class="wrap">
+      <div class="section-eyebrow">Keyboard</div>
+      <h2 class="section-title">Hands on the <em>keyboard.</em></h2>
+      <div class="shortcuts">
+        <div class="shortcut-row"><strong>Start selecting an element</strong><span class="kbd">S</span></div>
+        <div class="shortcut-row"><strong>Toggle the Screenshot popover</strong><span class="kbd">C</span></div>
+        <div class="shortcut-row"><strong>Toggle the fix list</strong><span class="kbd">L</span></div>
+        <div class="shortcut-row"><strong>Save the current comment</strong><span class="kbd">⏎</span></div>
+        <div class="shortcut-row"><strong>Cancel / close</strong><span class="kbd">Esc</span></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <div>Built by <a href="https://codebypanduro.dk" target="_blank" rel="noopener">Casper Panduro</a> · MIT</div>
+  <div style="display:flex; gap:18px;">
+    <a href="https://github.com/codebypanduro/charliefix" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://www.npmjs.com/package/charlie-fixes" target="_blank" rel="noopener">npm</a>
+  </div>
+</footer>
+
+<script src="./charlie.js"></script>
+<script src="https://unpkg.com/charlie-fixes"></script>
+
+</body>
+</html>
