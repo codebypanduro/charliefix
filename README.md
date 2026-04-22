@@ -1,5 +1,7 @@
 # Charlie fixes
 
+[**Live site ↗**](https://codebypanduro.github.io/charliefix/) — install snippets and an embedded demo.
+
 ![Charlie toolbar](./docs/toolbar.png)
 
 Pinch it, prompt it. A floating overlay that lets you pick DOM elements on any page, write comments, and copy the whole batch as a single prompt for your AI agent (Claude, Cursor, Copilot — whatever you paste into).

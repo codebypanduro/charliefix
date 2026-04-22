@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Charlie fixes — pinch it, prompt it</title>
+  <meta name="description" content="A floating overlay that lets you pick DOM elements on any page, write comments, and copy the whole batch as a single prompt for your AI agent." />
+  <meta property="og:title" content="Charlie fixes — pinch it, prompt it" />
+  <meta property="og:description" content="Walk through a running site, point at what's broken, describe the fix, and hand the whole batch to your AI agent in one paste." />
+  <meta property="og:image" content="./toolbar.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+
+<header class="wrap">
+  <nav class="nav">
+    <a class="logo" href="#top">
+      <span class="logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 36 36" width="20" height="20">
+          <path d="M 18 4 C 25 4 31 9 31 17 C 31 24 27 31 18 31 C 9 31 5 24 5 17 C 5 9 11 4 18 4 Z" fill="#faf8f5" />
+          <ellipse cx="10" cy="21" rx="2" ry="1.3" fill="#ffb8a0" opacity="0.55" />
+          <ellipse cx="26" cy="21" rx="2" ry="1.3" fill="#ffb8a0" opacity="0.55" />
+          <ellipse cx="13" cy="15" rx="1.5" ry="2.1" fill="#1a0f08" />
+          <ellipse cx="23" cy="15" rx="1.5" ry="2.1" fill="#1a0f08" />
+          <path d="M 15 22 Q 18 24 21 22" stroke="#1a0f08" stroke-width="1.3" stroke-linecap="round" fill="none" />
+          <path d="M 17 4 Q 18 1.2 20 4" stroke="#1a0f08" stroke-width="1.3" stroke-linecap="round" fill="none" />
+        </svg>
+      </span>
+      <span>Charlie fixes</span>
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#install">Install</a>
+      <a href="#shortcuts">Shortcuts</a>
+      <a href="#contribute">Contribute</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="https://www.npmjs.com/package/charlie-fixes" target="_blank" rel="noopener" aria-label="npm">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
+          <path d="M1.5 6h21v12h-10.5v-1.5h-7.5v1.5h-3zM3 16.5h3v-7.5h3v7.5h1.5v-9h-7.5zm7.5-7.5v10.5h3v-1.5h4.5v-9zm4.5 1.5v6h-1.5v-6zm3 6h3v-7.5h-3z"/>
+        </svg>
+        npm
+      </a>
+      <a class="btn btn-solid" href="https://github.com/codebypanduro/charliefix" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
+          <path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.57.1.78-.25.78-.55 0-.27-.01-1.17-.02-2.12-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.07 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.6.23 2.78.11 3.07.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.4-5.26 5.69.41.36.78 1.06.78 2.14 0 1.54-.01 2.79-.01 3.17 0 .3.21.66.79.55A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/>
+        </svg>
+        GitHub
+      </a>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="hero" style="border-top: 0; padding-top: 72px;">
+    <div class="wrap">
+      <h1>Pinch it, <em>prompt it.</em></h1>
+      <p class="lede">
+        A floating overlay that lets you pick DOM elements on any page, write
+        comments, and copy the whole batch as a single prompt for your AI
+        agent — Claude, Cursor, Copilot, whatever you paste into.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-solid" href="#install">Install</a>
+        <a class="btn btn-ghost" href="https://github.com/codebypanduro/charliefix" target="_blank" rel="noopener">View on GitHub →</a>
+      </div>
+      <div class="hint">
+        Try it now — press <span class="kbd">S</span> to pick an element on this page.
+      </div>
+
+      <div class="shot-stage" aria-label="Charlie fixes toolbar — live demo">
+        <div class="demo-bar" role="toolbar">
+          <div class="demo-mascot" aria-hidden="true">
+            <svg viewBox="0 0 36 36" width="34" height="34">
+              <path d="M 18 4 C 25 4 31 9 31 17 C 31 24 27 31 18 31 C 9 31 5 24 5 17 C 5 9 11 4 18 4 Z" fill="#faf8f5" />
+              <ellipse cx="10" cy="21" rx="2" ry="1.3" fill="#ffb8a0" opacity="0.55" />
+              <ellipse cx="26" cy="21" rx="2" ry="1.3" fill="#ffb8a0" opacity="0.55" />
+              <ellipse cx="13" cy="15" rx="1.5" ry="2.1" fill="#1a0f08" />
+              <ellipse cx="23" cy="15" rx="1.5" ry="2.1" fill="#1a0f08" />
+              <path d="M 15 22 Q 18 24 21 22" stroke="#1a0f08" stroke-width="1.3" stroke-linecap="round" fill="none" />
+              <path d="M 17 4 Q 18 1.2 20 4" stroke="#1a0f08" stroke-width="1.3" stroke-linecap="round" fill="none" />
+            </svg>
+          </div>
+          <div class="demo-divider"></div>
+          <button class="demo-btn" data-trigger-key="s" title="Select an element">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l7 19 2-8 8-2z"/></svg>
+            Select <span class="demo-kbd">S</span>
+          </button>
+          <button class="demo-btn" data-trigger-key="c" title="Capture a screenshot">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            Screenshot <span class="demo-kbd">C</span>
+          </button>
+          <div class="demo-divider"></div>
+          <button class="demo-btn" data-trigger-key="l" title="Open fix list">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            Fixes
+          </button>
+          <button class="demo-btn demo-cta" title="Copy prompt to clipboard">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            Hand off
+          </button>
+        </div>
+        <p class="shot-caption">Click a button, or press the key — this drives the real overlay running on the page.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="wrap">
+      <div class="section-eyebrow">What it does</div>
+      <h2 class="section-title">Walk the page, <em>point at what's broken</em>, hand it off.</h2>
+      <p class="section-sub">
+        Built for vibe coders and developers who'd rather click the issue than describe it.
+        Collect fixes as you go. Paste the batch when you're done.
+      </p>
+
+      <div class="feature-grid">
+        <div class="feature">
+          <div class="feature-icon">S</div>
+          <h3>Element picker</h3>
+          <p>Hover to highlight, click to capture. Charlie records the selector, text, and surrounding component hints for your prompt.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">C</div>
+          <h3>Screenshot capture</h3>
+          <p>Crop a region or grab the full viewport via html2canvas. Shots save alongside their note and survive reloads.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">⎇</div>
+          <h3>Shadow DOM isolated</h3>
+          <p>The overlay lives in its own shadow root. Your page's CSS can't reach it, its CSS can't reach you.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">↯</div>
+          <h3>One-prompt handoff</h3>
+          <p>Every fix, every selector, every screenshot — bundled into a single markdown prompt ready to paste into Claude, Cursor, or Copilot.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">⌘</div>
+          <h3>Keyboard-first</h3>
+          <p><span class="kbd">S</span> select, <span class="kbd">C</span> capture, <span class="kbd">L</span> list. Your hands stay on the keyboard.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">64</div>
+          <h3>~64&nbsp;kB gzipped</h3>
+          <p>Core overlay is ~12&nbsp;kB. html2canvas only loads when you actually trigger a capture.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="install">
+    <div class="wrap">
+      <div class="section-eyebrow">Install</div>
+      <h2 class="section-title">One line. <em>Any project.</em></h2>
+      <p class="section-sub">
+        Drop it in via <code>&lt;script&gt;</code>, npm, React, or Vue. Gate on dev —
+        you almost certainly don't want Charlie loaded in production.
+      </p>
+
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" aria-selected="true" data-tab="cdn">CDN</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="npm">npm</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="react">React</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="vue">Vue</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="config">Config</button>
+      </div>
+
+      <div class="tab-panel active" data-panel="cdn">
+        <div class="code">
+          <button class="copy" type="button">Copy</button>
+<pre>&lt;script src="https://unpkg.com/charlie-fixes"&gt;&lt;/script&gt;</pre>
+        </div>
+        <p class="install-note">Drops a toolbar at the bottom of every page the script loads on. Nothing else to configure.</p>
+      </div>
+
+      <div class="tab-panel" data-panel="npm">
+        <div class="code">
+          <button class="copy" type="button">Copy</button>
+<pre>npm install -D charlie-fixes
+
+// anywhere that runs on the client:
+import 'charlie-fixes';</pre>
+        </div>
+        <p class="install-note">Auto-mounts on import. Gate behind <code>import.meta.env.DEV</code> or <code>process.env.NODE_ENV</code>.</p>
+      </div>
+
+      <div class="tab-panel" data-panel="react">
+        <div class="code">
+          <button class="copy" type="button">Copy</button>
+<pre>import { CharlieFixes } from 'charlie-fixes/react';
+
+export default function RootLayout({ children }) {
+  return (
+    &lt;html&gt;
+      &lt;body&gt;
+        {children}
+        {process.env.NODE_ENV === 'development' &&amp;&amp; &lt;CharlieFixes /&gt;}
+      &lt;/body&gt;
+    &lt;/html&gt;
+  );
+}</pre>
+        </div>
+        <p class="install-note">Props: <code>accent?: string</code>, <code>enabled?: boolean</code>. Toggle <code>enabled</code> to mount/unmount at runtime.</p>
+      </div>
+
+      <div class="tab-panel" data-panel="vue">
+        <div class="code">
+          <button class="copy" type="button">Copy</button>
+<pre>import { createApp } from 'vue';
+import App from './App.vue';
+import { CharlieFixes } from 'charlie-fixes/vue';
+
+createApp(App)
+  .component('CharlieFixes', CharlieFixes)
+  .mount('#app');
+
+// template:
+// &lt;CharlieFixes v-if="isDev" accent="oklch(0.72 0.17 35)" /&gt;</pre>
+        </div>
+        <p class="install-note">For Nuxt, wrap in <code>&lt;ClientOnly&gt;</code> — the overlay is browser-only.</p>
+      </div>
+
+      <div class="tab-panel" data-panel="config">
+        <div class="code">
+          <button class="copy" type="button">Copy</button>
+<pre>&lt;script&gt;
+  window.__CHARLIE__ = {
+    accent: 'oklch(0.72 0.17 35)', // any CSS color
+    mount: 'auto',                  // 'manual' to skip auto-mount
+  };
+&lt;/script&gt;
+&lt;script src="https://unpkg.com/charlie-fixes"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+  // if mount: 'manual'
+  window.CharlieFixes.mount();
+  window.CharlieFixes.unmount();
+&lt;/script&gt;</pre>
+        </div>
+      </div>
+
+      <div class="live">
+        <div class="mark" aria-hidden="true">
+          <svg viewBox="0 0 36 36" width="28" height="28">
+            <path d="M 18 4 C 25 4 31 9 31 17 C 31 24 27 31 18 31 C 9 31 5 24 5 17 C 5 9 11 4 18 4 Z" fill="#faf8f5" />
+            <ellipse cx="10" cy="21" rx="2" ry="1.3" fill="#ffb8a0" opacity="0.55" />
+            <ellipse cx="26" cy="21" rx="2" ry="1.3" fill="#ffb8a0" opacity="0.55" />
+            <ellipse cx="13" cy="15" rx="1.5" ry="2.1" fill="#1a0f08" />
+            <ellipse cx="23" cy="15" rx="1.5" ry="2.1" fill="#1a0f08" />
+            <path d="M 15 22 Q 18 24 21 22" stroke="#1a0f08" stroke-width="1.3" stroke-linecap="round" fill="none" />
+            <path d="M 17 4 Q 18 1.2 20 4" stroke="#1a0f08" stroke-width="1.3" stroke-linecap="round" fill="none" />
+          </svg>
+        </div>
+        <p>
+          <strong>This page is running Charlie fixes.</strong>
+          Press <span class="kbd">S</span> to pick an element,
+          <span class="kbd">C</span> to crop a screenshot,
+          <span class="kbd">L</span> to open the queue.
+          <span class="kbd">Esc</span> cancels.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="shortcuts">
+    <div class="wrap">
+      <div class="section-eyebrow">Keyboard</div>
+      <h2 class="section-title">Hands on the <em>keyboard.</em></h2>
+      <div class="shortcuts">
+        <div class="shortcut-row"><strong>Start selecting an element</strong><span class="kbd">S</span></div>
+        <div class="shortcut-row"><strong>Toggle the Screenshot popover</strong><span class="kbd">C</span></div>
+        <div class="shortcut-row"><strong>Toggle the fix list</strong><span class="kbd">L</span></div>
+        <div class="shortcut-row"><strong>Save the current comment</strong><span class="kbd">⏎</span></div>
+        <div class="shortcut-row"><strong>Cancel / close</strong><span class="kbd">Esc</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contribute">
+    <div class="wrap">
+      <div class="section-eyebrow">Contribute</div>
+      <h2 class="section-title">Open source. <em>Pull requests welcome.</em></h2>
+      <p class="section-sub">
+        Charlie is MIT-licensed and developed in the open. File an issue, open
+        a PR, or fork it — all three are appreciated.
+      </p>
+
+      <div class="feature-grid">
+        <div class="feature">
+          <div class="feature-icon">!</div>
+          <h3>Report a bug</h3>
+          <p>Found something broken or unexpected? Open an issue with repro steps — the smaller the repro, the faster it gets fixed.</p>
+          <a class="feature-link" href="https://github.com/codebypanduro/charliefix/issues/new" target="_blank" rel="noopener">Open an issue →</a>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">+</div>
+          <h3>Suggest a feature</h3>
+          <p>Have an idea for a new tool, shortcut, or integration? Start a discussion or issue — describe the workflow you're trying to unlock.</p>
+          <a class="feature-link" href="https://github.com/codebypanduro/charliefix/issues/new" target="_blank" rel="noopener">Propose it →</a>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">⤴</div>
+          <h3>Send a PR</h3>
+          <p>Fork, branch off <code>main</code>, keep changes focused, and open a pull request. Run <code>npm run typecheck</code> and <code>npm run build</code> before pushing.</p>
+          <a class="feature-link" href="https://github.com/codebypanduro/charliefix/pulls" target="_blank" rel="noopener">View pull requests →</a>
+        </div>
+      </div>
+
+      <h3 class="subsection-title">Run it locally</h3>
+      <div class="code" style="margin-top: 16px;">
+        <button class="copy" type="button">Copy</button>
+<pre>git clone https://github.com/codebypanduro/charliefix.git
+cd charliefix
+npm install
+npm run dev       # Vite dev server on :5173
+npm run typecheck # strict TS check
+npm run build     # library bundle into /dist</pre>
+      </div>
+      <p class="install-note">
+        Architecture notes, conventions, and gotchas live in
+        <a href="https://github.com/codebypanduro/charliefix/blob/main/CLAUDE.md" target="_blank" rel="noopener"><code>CLAUDE.md</code></a>.
+        Skim it before your first PR — especially the Preact / Shadow DOM / image-lifecycle notes.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <div class="footer-credit">
+      Built by <a href="https://codebypanduro.dk" target="_blank" rel="noopener">Code by Panduro</a>
+      <span class="footer-sep" aria-hidden="true">·</span>
+      <span>MIT</span>
+    </div>
+    <div class="footer-links">
+      <a class="footer-icon" href="https://github.com/codebypanduro/charliefix" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+          <path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.57.1.78-.25.78-.55 0-.27-.01-1.17-.02-2.12-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.07 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.6.23 2.78.11 3.07.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.4-5.26 5.69.41.36.78 1.06.78 2.14 0 1.54-.01 2.79-.01 3.17 0 .3.21.66.79.55A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/>
+        </svg>
+        <span>GitHub</span>
+      </a>
+      <a class="footer-icon" href="https://www.npmjs.com/package/charlie-fixes" target="_blank" rel="noopener" aria-label="npm">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+          <path d="M1.5 6h21v12h-10.5v-1.5h-7.5v1.5h-3zM3 16.5h3v-7.5h3v7.5h1.5v-9h-7.5zm7.5-7.5v10.5h3v-1.5h4.5v-9zm4.5 1.5v6h-1.5v-6zm3 6h3v-7.5h-3z"/>
+        </svg>
+        <span>npm</span>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script src="./charlie.js"></script>
+<script src="https://unpkg.com/charlie-fixes"></script>
+
+</body>
+</html>
