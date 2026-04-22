@@ -168,7 +168,7 @@ export function CharlieApp({ accent }: { accent: string }) {
           onClick={() => setMode(mode === 'picking' ? 'idle' : 'picking')}
           title="Select an element (S)"
         >
-          {Icon.cursor} Select <span class="kbd">S</span>
+          {Icon.cursor} <span class="c-label">Select</span> <span class="kbd">S</span>
         </button>
         <div class="c-tool-wrap">
           <button
@@ -176,7 +176,7 @@ export function CharlieApp({ accent }: { accent: string }) {
             onClick={() => setShotMenuOpen((o) => !o)}
             title="Screenshot (C)"
           >
-            {Icon.camera} Screenshot <span class="kbd">C</span>
+            {Icon.camera} <span class="c-label">Screenshot</span> <span class="kbd">C</span>
           </button>
           {shotMenuOpen && (
             <>
@@ -218,7 +218,7 @@ export function CharlieApp({ accent }: { accent: string }) {
           onClick={() => setQueueOpen(!queueOpen)}
           title="Open fix list (L)"
         >
-          {Icon.list} Fixes
+          {Icon.list} <span class="c-label">Fixes</span>
           {items.length > 0 && <span class="c-count-badge">{items.length}</span>}
         </button>
         <button
