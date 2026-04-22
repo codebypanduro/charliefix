@@ -24,13 +24,19 @@ export function CropLayer({ fullshot, onCrop, onCancel }: Props) {
     const PLUS_CURSOR = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><line x1='12' y1='3' x2='12' y2='21' stroke='white' stroke-width='3' stroke-linecap='round'/><line x1='3' y1='12' x2='21' y2='12' stroke='white' stroke-width='3' stroke-linecap='round'/><line x1='12' y1='4' x2='12' y2='20' stroke='black' stroke-width='1.5' stroke-linecap='round'/><line x1='4' y1='12' x2='20' y2='12' stroke='black' stroke-width='1.5' stroke-linecap='round'/></svg>") 12 12, crosshair`;
     const prevHtml = document.documentElement.style.cursor;
     const prevBody = document.body.style.cursor;
+    const prevUserSelect = document.body.style.userSelect;
+    const prevWebkitUserSelect = document.body.style.webkitUserSelect;
     document.documentElement.style.setProperty('cursor', PLUS_CURSOR, 'important');
     document.body.style.setProperty('cursor', PLUS_CURSOR, 'important');
+    document.body.style.userSelect = 'none';
+    document.body.style.webkitUserSelect = 'none';
 
     let s: Point | null = null;
     let e: Point | null = null;
 
     const down = (ev: MouseEvent) => {
+      ev.preventDefault();
+      window.getSelection()?.removeAllRanges();
       s = { x: ev.clientX, y: ev.clientY };
       e = { x: ev.clientX, y: ev.clientY };
       setStart(s);
@@ -68,6 +74,8 @@ export function CropLayer({ fullshot, onCrop, onCancel }: Props) {
       window.removeEventListener('keydown', esc);
       document.documentElement.style.cursor = prevHtml;
       document.body.style.cursor = prevBody;
+      document.body.style.userSelect = prevUserSelect;
+      document.body.style.webkitUserSelect = prevWebkitUserSelect;
     };
   }, [fullshot, onCrop, onCancel]);
 
