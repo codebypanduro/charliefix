@@ -25,15 +25,11 @@ async function canvasToBlob(canvas: HTMLCanvasElement): Promise<Blob> {
 
 export async function captureRegion(rect: Rect): Promise<Blob> {
   return withOverlayHidden(async () => {
-    const canvas = await html2canvas(document.body, {
+    const canvas = await html2canvas(document.documentElement, {
       x: rect.x + window.scrollX,
       y: rect.y + window.scrollY,
       width: rect.w,
       height: rect.h,
-      scrollX: -window.scrollX,
-      scrollY: -window.scrollY,
-      windowWidth: document.documentElement.clientWidth,
-      windowHeight: document.documentElement.clientHeight,
       useCORS: true,
       backgroundColor: null,
       logging: false,
