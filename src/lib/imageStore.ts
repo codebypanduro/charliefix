@@ -3,7 +3,7 @@ const STORE = 'images';
 const VERSION = 1;
 
 let dbPromise: Promise<IDBDatabase> | null = null;
-const urlCache = new Map<string, string>();
+const dataUrlCache = new Map<string, string>();
 
 function openDb(): Promise<IDBDatabase> {
   if (dbPromise) return dbPromise;
@@ -39,20 +39,25 @@ export async function getImage(id: string): Promise<Blob | undefined> {
 }
 
 export async function deleteImage(id: string): Promise<void> {
-  const cached = urlCache.get(id);
-  if (cached) {
-    URL.revokeObjectURL(cached);
-    urlCache.delete(id);
-  }
+  dataUrlCache.delete(id);
   await tx('readwrite', (s) => s.delete(id));
 }
 
-export async function getObjectUrl(id: string): Promise<string | undefined> {
-  const cached = urlCache.get(id);
+function blobToDataUrl(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(blob);
+  });
+}
+
+export async function getPreviewUrl(id: string): Promise<string | undefined> {
+  const cached = dataUrlCache.get(id);
   if (cached) return cached;
   const blob = await getImage(id);
   if (!blob) return undefined;
-  const url = URL.createObjectURL(blob);
-  urlCache.set(id, url);
+  const url = await blobToDataUrl(blob);
+  dataUrlCache.set(id, url);
   return url;
 }

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { Charlie } from './Charlie';
 import { Icon } from '../icons';
 import { describeNode } from '../lib/describeNode';
-import { getObjectUrl } from '../lib/imageStore';
+import { getPreviewUrl } from '../lib/imageStore';
 import type { ShotMeta } from '../lib/storage';
 
 type Props = {
@@ -52,7 +52,7 @@ export function Composer({ el, imageId, shotMeta, onSave, onCancel }: Props) {
       return;
     }
     let cancelled = false;
-    getObjectUrl(imageId).then((url) => {
+    getPreviewUrl(imageId).then((url) => {
       if (!cancelled && url) setThumbUrl(url);
     });
     return () => {
