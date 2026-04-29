@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'preact/hooks';
 import { Icon } from '../icons';
 import type { FixItem } from '../lib/storage';
-import { getImage, getObjectUrl } from '../lib/imageStore';
+import { getImage, getPreviewUrl } from '../lib/imageStore';
 import { imageFilename, orderedItems } from '../lib/promptGen';
 
 type Props = {
@@ -25,7 +25,7 @@ function ThumbRow({
   useEffect(() => {
     if (!item.imageId) return;
     let cancelled = false;
-    getObjectUrl(item.imageId).then((u) => {
+    getPreviewUrl(item.imageId).then((u) => {
       if (!cancelled && u) setUrl(u);
     });
     return () => {

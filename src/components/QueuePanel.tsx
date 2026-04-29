@@ -3,13 +3,13 @@ import { Charlie } from './Charlie';
 import { Icon } from '../icons';
 import type { FixItem } from '../lib/storage';
 import { generateMarkdown } from '../lib/promptGen';
-import { getObjectUrl } from '../lib/imageStore';
+import { getPreviewUrl } from '../lib/imageStore';
 
 function Thumb({ imageId }: { imageId: string }) {
   const [url, setUrl] = useState<string | null>(null);
   useEffect(() => {
     let cancelled = false;
-    getObjectUrl(imageId).then((u) => {
+    getPreviewUrl(imageId).then((u) => {
       if (!cancelled && u) setUrl(u);
     });
     return () => {
